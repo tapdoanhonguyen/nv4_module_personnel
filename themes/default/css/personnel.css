@@ -1,0 +1,115 @@
+.GroupExam{}
+.GroupExam a img{
+	width: 100%;
+}
+
+a.classtitle{
+	font-weight: bold;
+}
+
+.Detail .tab-content{
+
+    margin-bottom: 10px;
+	border: 1px solid #dddddd;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+	border-top: none;
+}
+.Detail ul.nav.nav-tabs{
+	display:block;
+	margin-top: 10px;
+	
+}
+/* .Detail .tab-content>.active {
+    display: block;
+}
+.Detail .tab-content>.tab-pane {
+    display: none;
+} */
+
+
+.BoxGroupExam{
+	margin-bottom: 30px
+}
+.BoxGroupExam .GroupExam{
+	border: 1px #ccc solid;
+    margin-bottom: 10px;
+}
+.BoxGroupExam .GroupExam ul{
+	border-bottom:1px #ccc solid;
+	padding:0;
+	margin:0;
+	margin-bottom: 10px;
+}
+.BoxGroupExam .GroupExam a.dimgray{
+	padding-top:8px
+}
+.BoxGroupExam .GroupExam ul li{
+	padding:0;
+}
+.BoxGroupExam .GroupExam ul li.hidden-xs h4 a{
+	border-right: 1px #ccc solid;
+    padding-right: 6px;
+}
+.BoxGroupExam .GroupExam ul li.hidden-xs h4 a:last-child{border-right:0}
+.BoxGroupExam .GroupExam h2 {
+    background: #428bca;
+	color:#fff;
+    padding: 6px 10px 6px 6px;
+}
+.BoxGroupExam .GroupExam h2 a{
+	text-transform: uppercase;
+	color:#fff
+}
+.BoxGroupExam .GroupExam .grb {
+    border: 1px #ccc solid;
+    padding: 6px;
+    margin-bottom: 10px;
+/*     text-align: center;
+ */	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	position:relative;
+ 
+}
+ 
+.BoxGroupExam .GroupExam .grb:hover a.button-link {
+	display:block;
+}
+
+.BoxGroupExam .GroupExam .grb:hover .gri{
+	opacity: 0.8;
+}
+.BoxGroupExam .GroupExam .grb .gri a{
+	display:block;
+	width: 100%;
+}
+.BoxGroupExam .GroupExam .grb .gri a img{
+	width:100%;
+}
+
+.BoxGroupExam .GroupExam .grb .gri{
+/* 	max-height:150px; */
+	overflow:hidden
+}
+
+.BoxGroupExam .GroupExam .grb .grt{
+	
+}
+.BoxGroupExam .GroupExam .grb .grt a{
+	font-weight:bold;
+	padding-top:2px;
+	display:block;
+	/* height:40px; */
+	overflow:hidden
+	
+}
+.basicInfo{margin:10px 0;}
+.basicInfo .code{
+	font-weight:bold;
+	color:#333  
+}
+.infoex p{
+	margin: 0;
+}
