@@ -23,6 +23,8 @@ $sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lan
 $sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_history_insurances';
 $sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_history_solves';
 $sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_registermedical';
+$sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_timekeeper';
+$sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_timekeeper_schedule';
  
 $sql_create_module = $sql_drop_module;
  
@@ -227,7 +229,40 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   price varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (history_solves_id)
 ) ENGINE=MyISAM";
- 
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_timekeeper (
+  id int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  parentid int(11) NOT NULL DEFAULT 0,
+  userid int(11) NOT NULL DEFAULT 0,
+  locationid int(11) NOT NULL DEFAULT 0,
+  date_login int(11) NOT NULL DEFAULT 0,
+  time_login varchar(250) NOT NULL DEFAULT '',
+  type_login tinyint(4) NOT NULL DEFAULT 0,
+  image_file varchar(250) NOT NULL DEFAULT '',
+  image_data longblob NOT NULL,
+  note text NOT NULL DEFAULT '',
+  lat varchar(250) NOT NULL DEFAULT '0',
+  lng varchar(250) NOT NULL DEFAULT '0',
+  distance varchar(250) NOT NULL DEFAULT '',
+  address varchar(250) NOT NULL DEFAULT '',
+  ip varchar(250) NOT NULL DEFAULT '',
+  browse varchar(250) NOT NULL DEFAULT '',
+  edit_time int(11) NOT NULL DEFAULT 0,
+  adminid int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM";
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_timekeeper_schedule (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  parentid int(11) NOT NULL DEFAULT 0,
+  userid int(11) NOT NULL DEFAULT 0,
+  locationid int(11) NOT NULL DEFAULT 0,
+  date_start int(11) NOT NULL DEFAULT 0,
+  date_end int(11) NOT NULL DEFAULT 0,
+  ip varchar(250) NOT NULL DEFAULT '',
+  browse varchar(250) NOT NULL DEFAULT '',
+  edit_time int(11) NOT NULL DEFAULT 0,
+  adminid int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM";
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_registermedical (
   registermedical_id mediumint UNSIGNED NOT NULL AUTO_INCREMENT,
   province_id mediumint NOT NULL DEFAULT '0',
@@ -246,18 +281,6 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
  
 $sql_create_module[] = "INSERT INTO  " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting (config_name, config_value) VALUES
 ('perpage', '100'),
-('employer_group', '6'),
+('employer_group', '10'),
+('employer_manager', '11'),
 ('appapi', '')";
-
-// $sql_create_module[] = "INSERT INTO " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . " (personnel_id, userid, first_name, last_name, gender, birthday, main_phone, other_phone, main_email, other_email, address, knowledge, image, jointime, position, part, date_added, date_modified, createtime, duetime, cycle, useradd, status) VALUES
-// (2, 6, 'Vinh', 'Lê Thúc', 1, 466273439, '0963027720', '094902770', 'vinh.lethuc@nv4.vn', 'thucvinh.nv4@gmail.com', '35/6 Bùi Quang Là, Phường 12, Quận Gò Vấp, Hồ Chí Minh', 'Đại Học', '', 1499444639, 'Giám đốc', '5,1', 1563453079, 1574871435, 1499444639, 0, 12, 1, 1),
-// (5, 9, 'Đông', 'Nguyễn Thị', 0, 755713439, '0965748401', '', 'ketoan@nv4.vn', 'phuongdong.nv4@gmail.com', '35/6 Bùi Quang Là, Phường 12, Quận Gò Vấp, Hồ Chí Minh', 'Đại học', '', 1563467039, 'Nhân viên văn phòng', '5,6', 1563453617, 1574871473, 1563467039, 1595089439, 12, 1, 1),
-// (6, 10, 'Duy', 'Phạm Đình', 1, 650737439, '0359052338', '', 'duy.phamdinh@nv4.vn', 'phamduyphuxuan@gmail.com', 'thon 3, xa bang adrenh', 'Đại học', '', 1522859039, 'Nhân viên Seo', '2', 1563454285, 1596614199, 1522859039, 0, 12, 1, 1),
-// (8, 12, 'Chương', 'Trương Huy', 1, 631211039, '0869385041', '', 'chuong.truonghuy@nv4.vn', 'huychuong.nv4@gmail.com', '', '', '', 0, '', '2', 1563454479, 1563454479, 0, 0, 0, 1, 1),
-// (10, 7, 'Điền', 'Nguyễn Kim', 1, 578420639, '0988162753', '', 'kythuat@nv4.vn', '', '', '', '', 0, 'Nhân viên lập trình', '1', 1563454656, 1596517662, 0, 0, 0, 1, 1),
-// (28, 61, 'Phương', 'Lê Minh', 1, 810404639, '0938570609', '', 'phuonng.leminh@nv4.vn', '', '', '', '', 1591028639, 'Nhân viên', '2', 1596614495, 1596614495, 1591028639, 1622564639, 12, 6, 1),
-// (21, 24, 'Hoàng', 'Nguyễn Minh', 1, 629915039, '0903233130', '', 'thietke@nv4.vn', 'hoangdesign.nv4@gmail.com', '', 'Thiết kế đồ họa', '', 1566318239, 'Nhân viên thiết kế', '4', 1566289498, 1596771829, 1566318239, 0, 2, 1, 1),
-// (29, 62, 'Hoàng', 'Vũ Lê Minh', 1, 833041439, '0869048388', '', 'hoang.vuleminh@nv4.vn', 'minhhoang0596@gmail.com', '218/24/14 Nguyễn Duy Cung, phường 12, Gò Vấp, Tp.HCM', '12/12', '', 1591028639, 'Nhân Viên Học Việc', '1', 1596813187, 1596813187, 1591028639, 1622564639, 12, 6, 1),
-// (30, 63, 'Hiếu', 'Đức', 1, 1597508639, '0949027720', '', 'duchieu1508@gmail.com', '', '', '', '', 0, '', '3', 1597428450, 1597428450, 1596299039, 1627835039, 12, 6, 1);
-// ";
- 

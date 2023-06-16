@@ -163,3 +163,19 @@ $lang_module['error_cateory_permission']='Bạn không có quyền truy cập ch
  $lang_module['login']='Vào ca';
  $lang_module['logout']='Ra ca';
  $lang_module['no_login']='Bạn chưa đăng nhập';
+
+//Lang for function scheduleadd
+$lang_module['scheduleadd'] = 'scheduleadd';
+$lang_module['add'] = 'Thêm mới';
+$lang_module['edit'] = 'Sửa';
+$lang_module['delete'] = 'Xóa';
+$lang_module['number'] = 'STT';
+$lang_module['active'] = 'Trạng thái';
+$lang_module['search_title'] = 'Nhập từ khóa tìm kiếm';
+$lang_module['search_submit'] = 'Tìm kiếm';
+$lang_module['locationid'] = 'Nơi làm việc';
+$lang_module['date_start'] = 'Ngày bắt đầu';
+$lang_module['no_date_start'] = 'Chưa có ngày bắt đầu';
+$lang_module['time_end'] = 'Ngày kết thúc';
+$lang_module['no_time_end'] = 'Chưa có ngày kết thúc';
+$lang_module['schedule_save'] = 'Lưu lịch trình';

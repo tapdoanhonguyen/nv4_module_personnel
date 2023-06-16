@@ -40,71 +40,62 @@ if (defined('NV_IS_USER') || defined('NV_IS_ADMIN')){
 		$array_locationid[$_row['data_id']] = $_row;
 	}
 	if ($nv_Request->isset_request('submit', 'post')) {
-		$row['idlogin'] = $nv_Request->get_int('idlogin', 'post,get', 0);
+		$row['locationid'] = $nv_Request->get_int('locationid', 'post', 0);
+		$date_start = $nv_Request->get_string('date_start', 'post');
+		$date_end = $nv_Request->get_string('date_end', 'post');
+		if(empty($date_start)){
+			$error[] = $lang_module['no_date_start'];
+		}
+		if(empty($date_start)){
+			$error[] = $lang_module['no_date_end'];
+		}
+		$date_begin_array = explode("/",$date_start);
+		$start_date = $date_begin_array[2].'-' . $date_begin_array[1] . '-' . $date_begin_array[0] . '';
+		$date_end_array = explode("/",$date_end);
+		
+		$end_date = $date_end_array[2].'-' . $date_end_array[1] . '-' . $date_end_array[0] . '';
+		
+		$dates = array();
+		$current_date = strtotime($start_date);
+		$end_date = strtotime($end_date);
+
+		while ($current_date <= $end_date) {
+			
+			$dates[] = date('d/m/Y', $current_date);
+			$current_date = strtotime('+1 day', $current_date);
+		}
+		
 		if (empty($error)) {
 			try {
 				if (empty($row['id'])) {
-					
-					$row['date_login'] = NV_CURRENTTIME;
-					$row['time_login'] = date("H:i:s", $row['date_login']);
-					$row['type_login'] = $nv_Request->get_int('typelogin', 'post', 0);
-					$row['locationid'] = $nv_Request->get_int('locationid', 'post', 0);
-					$row['address'] = $nv_Request->get_title('address', 'post', 0);
-					$row['note'] = $nv_Request->get_textarea('note', 'post', 0);
-					$data = $nv_Request->get_title('imgdata', 'post', '');
-					
-					
-					// Loại bỏ các ký tự lạ và mã hóa dữ liệu ảnh
-					$filteredData = str_replace('data:image/png;base64,', '', $data);
-					$filteredData = str_replace(' ', '+', $filteredData);
-					$decodedData = base64_decode($filteredData);
-					$row['image_data'] = $filteredData;
-					// Lưu trữ ảnh dưới định dạng png vào server
-					$fileName = $row['username'] . "_" . $row['userid'] . "_" . $row['type_login'] . "_" . date('YmdHis') . ".png";
-					$row['image_file'] = $fileName;
-					
-					$row['lat'] = $nv_Request->get_title('lat', 'post', '');
-					$row['lng'] = $nv_Request->get_title('lng', 'post', '');
+					$row['parentid'] = 0;
 					$row['ip'] = $client_info['ip'];
 					$row['browse'] = $client_info['browser']['key'] . '-' . $client_info['client_os']['key'];
 
-					$stmt = $db->prepare('INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . '_timekeeper (userid, locationid, date_login, time_login, type_login, image_file, image_data, note, lat, lng, address, ip, browse) VALUES (:userid, :locationid, :date_login, :time_login, :type_login, :image_file, :image_data, :note, :lat, :lng, :address, :ip, :browse)');
 
+					$stmt = $db->prepare('INSERT INTO ' . NV_PREFIXLANG . '_' . $module_data . '_timekeeper_schedule (parentid, userid, locationid, date_start, date_end, ip, browse) VALUES (:parentid, :userid, :locationid, :date_start, :date_end, :ip, :browse)');
+
+					$stmt->bindParam(':parentid', $row['parentid'], PDO::PARAM_INT);
 					$stmt->bindParam(':userid', $row['userid'], PDO::PARAM_INT);
-					$stmt->bindParam(':date_login', $row['date_login'], PDO::PARAM_INT);
-					$stmt->bindParam(':locationid', $row['locationid'], PDO::PARAM_INT);
-
-					$stmt->bindParam(':time_login', $row['time_login'], PDO::PARAM_STR);
-					$stmt->bindParam(':type_login', $row['type_login'], PDO::PARAM_INT);
-					$stmt->bindParam(':image_file', $row['image_file'], PDO::PARAM_STR);
-					$stmt->bindParam(':image_data', $row['image_data'], PDO::PARAM_STR);
-					$stmt->bindParam(':note', $row['note'], PDO::PARAM_STR);
-					$stmt->bindParam(':lat', $row['lat'], PDO::PARAM_STR);
-					$stmt->bindParam(':lng', $row['lng'], PDO::PARAM_STR);
-					$stmt->bindParam(':address', $row['address'], PDO::PARAM_STR);
 					$stmt->bindParam(':ip', $row['ip'], PDO::PARAM_STR);
 					$stmt->bindParam(':browse', $row['browse'], PDO::PARAM_STR);
 
-				} 
+				} else {
+					$stmt = $db->prepare('UPDATE ' . NV_PREFIXLANG . '_' . $module_data . '_timekeeper_schedule SET locationid = :locationid, date_start = :date_start, date_end = :date_end WHERE id=' . $row['id']);
+				}
+				$stmt->bindParam(':locationid', $row['locationid'], PDO::PARAM_INT);
+				$stmt->bindParam(':date_start', $row['date_start'], PDO::PARAM_INT);
+				$stmt->bindParam(':date_end', $row['date_end'], PDO::PARAM_STR);
 
 				$exc = $stmt->execute();
 				if ($exc) {
-					$id = $db->lastInsertId();
+					$nv_Cache->delMod($module_name);
 					if (empty($row['id'])) {
-						
-						file_put_contents(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/personnel/timekeeper/capture/' . $fileName, $decodedData);
-						if($row['idlogin'] > 0){
-							$stmtl = $db->prepare('UPDATE ' . NV_PREFIXLANG . '_' . $module_data . '_timekeeper SET parentid = ' . $id . ' WHERE id=' . $row['idlogin']);
-							$stmtl->execute();
-							nv_insert_logs(NV_LANG_DATA, $module_name, 'Check Out', 'ID: ' . $row['id'], $user_info['userid']);
-						}else{
-							nv_insert_logs(NV_LANG_DATA, $module_name, 'Check in', ' ', $user_info['userid']);
-						}
-					} else{
-						file_put_contents(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/timekeeper/capture/' . $fileName, $decodedData);
-						nv_insert_logs(NV_LANG_DATA, $module_name, 'Check Out', 'ID: ' . $row['id'], $user_info['userid']);
+						nv_insert_logs(NV_LANG_DATA, $module_name, 'Add Scheduleadd', ' ', $user_info['userid']);
+					} else {
+						nv_insert_logs(NV_LANG_DATA, $module_name, 'Edit Scheduleadd', 'ID: ' . $row['id'], $user_info['userid']);
 					}
-					nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=timekeeping');
+					nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=' . $op);
 				}
 			} catch(PDOException $e) {
 				trigger_error($e->getMessage());
@@ -135,7 +126,7 @@ if (defined('NV_IS_USER') || defined('NV_IS_ADMIN')){
 	// Viết code vào đây
 	//------------------
 
-	$contents = nv_theme_timekeeper_punch($array_data, $array_locationid, $module_config, $module_name);
+	$contents = nv_theme_timekeeper_schedule($array_data, $array_locationid, $module_config, $module_name);
 
 	include NV_ROOTDIR . '/includes/header.php';
 	echo nv_site_theme($contents);

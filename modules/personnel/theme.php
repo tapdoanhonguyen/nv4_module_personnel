@@ -707,7 +707,7 @@ function nv_theme_timekeeper_main($array_data, $array_locationid)
 		
 	}
 	
-	if(in_array("1", $user_info['in_groups'])||in_array("2", $user_info['in_groups'])){
+	if(in_array("1", $user_info['in_groups'])||in_array("2", $user_info['in_groups'])||in_array($getSetting['employer_manager'], $user_info['in_groups'])){
 		foreach($array_userid_users as $u =>$ui){
 			$value = array(
 				"userid" => $u,
@@ -743,6 +743,57 @@ function nv_theme_timekeeper_punch($array_data, $array_locationid)
     $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
+	$xtpl->assign('GOGGLEMAP_API', $getSetting['appapi']);
+	$xtpl->assign( 'TEMPLATE', $module_info['template'] );
+	foreach ($array_locationid as $group_id => $group_title) {
+		$xtpl->assign('LOCATION', [
+			'key' => $group_id,
+			'title' => $group_title['title'],
+			'selected' => $group_id == $array_data['locationid'] ? ' selected="selected"' : ''
+		]);
+		$xtpl->parse('main.location');
+	}
+	$array_data['punch_date'] = date("d/m/Y", NV_CURRENTTIME);
+	if($array_data['cout_time_check'] == 0){
+		$xtpl->assign( 'TYPELOGIN', 0 );
+		$xtpl->assign( 'IDLOGIN', 0 );
+		$xtpl->assign( 'ACTION_LOGIN', $lang_module['login'] );
+	}else{
+		$xtpl->assign( 'TYPELOGIN', 1 );
+		$xtpl->assign( 'IDLOGIN',  $array_data['idlogin']);
+		$xtpl->assign( 'ACTION_LOGIN',  $lang_module['logout']);
+	}
+	$xtpl->assign( 'DATA', $array_data );
+    //------------------
+    // Viết code vào đây
+    //------------------
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
+/**
+ * nv_theme_timekeeper_schedule()
+ * 
+ * @param mixed $array_data
+ * @return
+ */
+function nv_theme_timekeeper_schedule($array_data, $array_locationid)
+{
+    global $getSetting,$module_info, $lang_module, $lang_global, $op, $module_config, $module_name,$module_upload;
+
+    $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+	$xtpl->assign('NV_LANG_VARIABLE', NV_LANG_VARIABLE);
+	$xtpl->assign('NV_LANG_DATA', NV_LANG_DATA);
+	$xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
+	$xtpl->assign('NV_NAME_VARIABLE', NV_NAME_VARIABLE);
+	$xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
+	$xtpl->assign('MODULE_NAME', $module_name);
+	$xtpl->assign('MODULE_UPLOAD', $module_upload);
+	$xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
+	$xtpl->assign('OP', $op);
 	$xtpl->assign('GOGGLEMAP_API', $getSetting['appapi']);
 	$xtpl->assign( 'TEMPLATE', $module_info['template'] );
 	foreach ($array_locationid as $group_id => $group_title) {
