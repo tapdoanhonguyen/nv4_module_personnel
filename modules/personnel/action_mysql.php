@@ -25,6 +25,9 @@ $sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lan
 $sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_registermedical';
 $sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_timekeeper';
 $sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_timekeeper_schedule';
+$sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_timekeeper_schedule';
+$sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_attachment';
+$sql_drop_module[] = 'DROP TABLE IF EXISTS ' . $db_config['prefix'] . '_' . $lang . '_' . $module_data . '_setting';
  
 $sql_create_module = $sql_drop_module;
  
@@ -61,7 +64,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 	current_address varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Địa chỉ hiện tại',
 	place_current mediumint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'ID nơi ở hiện tại',
 	photo varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Ảnh đại diện',
-	description text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ghi chú',
+	description text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Ghi chú',
 	contract_code varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Mã hợp đồng',
 	contract_type smallint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Loại hợp đồng',
 	department_id smallint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Phòng ban',
@@ -94,7 +97,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 	status_profile tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Sơ yếu lý lịch',
 	status_document tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Bằng cấp, trình độ chuyên môn',
 	status_photo tinyint UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Ảnh cá nhân',
-	files mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Lịch sử giải quyết chế độ',
+	files mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Lịch sử giải quyết chế độ',
 	status_identity_card varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	resign_to_bill varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	attachment smallint UNSIGNED NOT NULL DEFAULT '0',
@@ -150,7 +153,7 @@ $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_
 ) ENGINE=MyISAM";
 
 
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_registermedical (
+/* $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_registermedical (
 	registermedical_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
 	province_id mediumint(8) NOT NULL DEFAULT 0,
 	title varchar(250) NOT NULL DEFAULT '',
@@ -159,7 +162,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 	date_added int(11) unsigned NOT NULL DEFAULT 0,
 	PRIMARY KEY (registermedical_id),
 	UNIQUE KEY title (title)
-) ENGINE=MyISAM;";
+) ENGINE=MyISAM;"; */
 $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_allowances (
 	allowances_id mediumint UNSIGNED NOT NULL AUTO_INCREMENT,
 	personnel_id mediumint UNSIGNED NOT NULL DEFAULT '0',
@@ -277,6 +280,21 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 	config_name varchar(50) NOT NULL DEFAULT '',
 	config_value text NOT NULL,
 	UNIQUE KEY config_name (config_name)
+) ENGINE=MyISAM"; 
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_attachment (
+  attachment_id int(11) NOT NULL AUTO_INCREMENT,
+  rid mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  in_mod varchar(50) DEFAULT '',
+  userid mediumint(8) UNSIGNED NOT NULL DEFAULT 0,
+  addtime int(11) NOT NULL DEFAULT 0,
+  basename varchar(255) DEFAULT '',
+  newname varchar(255) DEFAULT '',
+  ext varchar(255) DEFAULT '',
+  mime varchar(255) DEFAULT '',
+  size int(10) UNSIGNED NOT NULL DEFAULT 0,
+  checksum varchar(255) DEFAULT '',
+  user_del tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (attachment_id)
 ) ENGINE=MyISAM";
  
 $sql_create_module[] = "INSERT INTO  " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting (config_name, config_value) VALUES
