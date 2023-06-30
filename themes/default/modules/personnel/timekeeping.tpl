@@ -11,8 +11,8 @@
             </div>
 		
             <div id="nav-tab" class="nav nav-tabs" role="tablist">
-                <a class="nav-item nav-link active" href="#tab-table1" data-tab="1" data-toggle="tab">Thông tin chung</a>
-                <a class="nav-item nav-link" href="#tab-table2" data-tab="2" data-toggle="tab">Chấm công của tôi</a>
+                <a class="nav-item nav-link active" href="#tab-table1" data-tab="1" data-toggle="tab">Chấm công của tôi</a>
+                <a class="nav-item nav-link timekeeping-table" href="#tab-table2" data-tab="2" data-toggle="tab">Bảng chấm công tuần</a>
                 <a class="nav-item nav-link" href="#tab-table5" data-tab="5" data-toggle="tab">Lịch trình của tôi</a>
 				<!-- BEGIN: admin -->
                 <a class="nav-item nav-link" href="#tab-table3" data-tab="3" data-toggle="tab">Chấm công toàn nhân viên</a>
@@ -21,110 +21,6 @@
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="tab-table1">
-                    <div class="card-body">
-                        <div class="">
-                            <div class="oxd-layout-context" data-v-130c27f5="">
-								<div class="orangehrm-background-container">
-									
-										<div class="orangehrm-timesheet-header" data-v-425cbc6c="">
-											<div class="orangehrm-timesheet-header--title" data-v-425cbc6c="">
-												<h6 class="oxd-text oxd-text--h6 orangehrm-main-title" data-v-7b563373="">Bảng chấm công trong tuần này</h6>
-											</div>
-											
-										</div>
-										<div class="orangehrm-timesheet-body" data-v-425cbc6c="">
-											<table class="orangehrm-timesheet-table" data-v-425cbc6c="">
-												<thead class="orangehrm-timesheet-table-header" data-v-425cbc6c="">
-													<tr class="orangehrm-timesheet-table-header-row" data-v-425cbc6c="">
-														<!-- BEGIN: time_week -->
-														<th class="orangehrm-timesheet-table-header-cell --center" data-v-425cbc6c="">
-															<span class="--day" data-v-425cbc6c="">{DATE.date}</span><span data-v-425cbc6c="">{DATE.datename}</span>
-														</th>
-														<!-- END: time_week -->
-														<th class="orangehrm-timesheet-table-header-cell --center --freeze-right" data-v-425cbc6c="">Total</th>
-													</tr>
-												</thead>
-												<tbody class="orangehrm-timesheet-table-body" data-v-425cbc6c="">
-													<tr class="orangehrm-timesheet-table-body-row" data-v-425cbc6c="">
-														<!-- BEGIN: time_week_look -->
-														<td class="orangehrm-timesheet-table-body-cell --center" data-v-425cbc6c="">
-															<button class="oxd-icon-button oxd-icon-button--secondary orangehrm-timesheet-icon-comment" type="button" data-v-f5c763eb="" data-v-425cbc6c="" style="display: none;">
-																<i class="oxd-icon bi-chat-dots" data-v-bddebfba="" data-v-f5c763eb=""></i>
-															</button>
-															<!-- BEGIN: loop -->
-															<span data-v-425cbc6c="">{TIMEKEEPING.time_login} - {TIMEKEEPING.time_checkout}</span> <br>
-															<!-- END: loop -->
-														</td>
-														<!-- END: time_week_look -->
-														
-													</tr>
-
-												</tbody>
-											</table>
-										</div>
-										
-									
-									<br>
-								</div>
-							</div>
-                            
-                        </div>
-						
-                    </div>	
-                </div>
-                <div class="tab-pane fade" id="tab-table5">
-                    <div class="card-body">
-                        <<div class="">
-                            <div class="oxd-layout-context" data-v-130c27f5="">
-								<div class="orangehrm-background-container">
-									
-										<div class="orangehrm-timesheet-header" data-v-425cbc6c="">
-											<div class="orangehrm-timesheet-header--title" data-v-425cbc6c="">
-												<h6 class="oxd-text oxd-text--h6 orangehrm-main-title" data-v-7b563373="">Bảng chấm công trong tuần này</h6>
-											</div>
-											
-										</div>
-										<div class="orangehrm-timesheet-body" data-v-425cbc6c="">
-											<table class="orangehrm-timesheet-table" data-v-425cbc6c="">
-												<thead class="orangehrm-timesheet-table-header" data-v-425cbc6c="">
-													<tr class="orangehrm-timesheet-table-header-row" data-v-425cbc6c="">
-														<!-- BEGIN: time_week -->
-														<th class="orangehrm-timesheet-table-header-cell --center" data-v-425cbc6c="">
-															<span class="--day" data-v-425cbc6c="">{DATE.date}</span><span data-v-425cbc6c="">{DATE.datename}</span>
-														</th>
-														<!-- END: time_week -->
-														<th class="orangehrm-timesheet-table-header-cell --center --freeze-right" data-v-425cbc6c="">Total</th>
-													</tr>
-												</thead>
-												<tbody class="orangehrm-timesheet-table-body" data-v-425cbc6c="">
-													<tr class="orangehrm-timesheet-table-body-row" data-v-425cbc6c="">
-														<!-- BEGIN: schedule_week_look -->
-														<td class="orangehrm-timesheet-table-body-cell --center" data-v-425cbc6c="">
-															<button class="oxd-icon-button oxd-icon-button--secondary orangehrm-timesheet-icon-comment" type="button" data-v-f5c763eb="" data-v-425cbc6c="" style="display: none;">
-																<i class="oxd-icon bi-chat-dots" data-v-bddebfba="" data-v-f5c763eb=""></i>
-															</button>
-															<!-- BEGIN: sloop -->
-															<span data-v-425cbc6c="">{SCHEDULE.unit} </span> <br>
-															<!-- END: sloop -->
-														</td>
-														<!-- END: schedule_week_look -->
-														
-													</tr>
-
-												</tbody>
-											</table>
-										</div>
-										
-									
-									<br>
-								</div>
-							</div>
-                            
-                        </div>
-						
-                    </div>
-                </div>
-				<div class="tab-pane fade" id="tab-table2">
                     <div class="card-body">
                         <div class="row">
 							<div class="oxd-layout-context" data-v-130c27f5="">
@@ -221,6 +117,82 @@
                         </div>
 						
                     </div>
+                </div>
+                <div class="tab-pane fade" id="tab-table5">
+                    <div class="card-body">
+                        <<div class="">
+                            <div class="oxd-layout-context" data-v-130c27f5="">
+								<div class="orangehrm-background-container">
+									
+										<div class="orangehrm-timesheet-header" data-v-425cbc6c="">
+											<div class="orangehrm-timesheet-header--title" data-v-425cbc6c="">
+												<h6 class="oxd-text oxd-text--h6 orangehrm-main-title" data-v-7b563373="">Bảng chấm công trong tuần này</h6>
+											</div>
+											
+										</div>
+										<div class="orangehrm-timesheet-body" data-v-425cbc6c="">
+											<table class="orangehrm-timesheet-table" data-v-425cbc6c="">
+												<thead class="orangehrm-timesheet-table-header" data-v-425cbc6c="">
+													<tr class="orangehrm-timesheet-table-header-row" data-v-425cbc6c="">
+														<!-- BEGIN: time_weeks -->
+														<th class="orangehrm-timesheet-table-header-cell --center" data-v-425cbc6c="">
+															<span class="--day" data-v-425cbc6c="">{DATE.date}</span><span data-v-425cbc6c="">{DATE.datename}</span>
+														</th>
+														<!-- END: time_weeks -->
+																											</tr>
+												</thead>
+												<tbody class="orangehrm-timesheet-table-body" data-v-425cbc6c="">
+													<tr class="orangehrm-timesheet-table-body-row" data-v-425cbc6c="">
+														<!-- BEGIN: schedule_week_look -->
+														<td class="orangehrm-timesheet-table-body-cell --center" data-v-425cbc6c="">
+															<button class="oxd-icon-button oxd-icon-button--secondary orangehrm-timesheet-icon-comment" type="button" data-v-f5c763eb="" data-v-425cbc6c="" style="display: none;">
+																<i class="oxd-icon bi-chat-dots" data-v-bddebfba="" data-v-f5c763eb=""></i>
+															</button>
+															<!-- BEGIN: sloop -->
+															<span data-v-425cbc6c="">{SCHEDULE.unit} </span> <br>
+															<!-- END: sloop -->
+														</td>
+														<!-- END: schedule_week_look -->
+														
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+										
+									
+									<br>
+								</div>
+							</div>
+                            
+                        </div>
+						
+                    </div>
+                </div>
+				<div class="tab-pane fade" id="tab-table2">
+					<div class="card-body">
+                        <div class="">
+                            <div class="oxd-layout-context" data-v-130c27f5="">
+								<div class="orangehrm-background-container">
+									
+										<div class="orangehrm-timesheet-header" data-v-425cbc6c="">
+											<div class="orangehrm-timesheet-header--title" data-v-425cbc6c="">
+												<h6 class="oxd-text oxd-text--h6 orangehrm-main-title" data-v-7b563373="">Bảng chấm công trong tuần này</h6>
+											</div>
+											
+										</div>
+										<div class="orangehrm-timesheet-body timekeeping-tab-table2" data-v-425cbc6c="">
+										</div>
+										
+									
+									<br>
+								</div>
+							</div>
+                            
+                        </div>
+						
+                    </div>	
+                    
                 </div>
 				<!-- BEGIN: admin_tab -->
                 <div class="tab-pane fade" id="tab-table3">
@@ -816,12 +788,80 @@ $(function () {
 	
 });  
 });   
-<!-- BEGIN:time_current_look -->
+<!-- BEGIN:time_week_loop -->
+
+$(document).ready(function() {
+  // Lắng nghe sự kiện khi người dùng nhấp vào tab
+  $('.timekeeping-table').click(function() {
+    $('.timekeeping-tab-table2').ready(function() {
+		// Gọi AJAX tới file timekeeping.php
+		$.ajax({
+		  url: script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=timekeeping&action=usersweektimekeeping&second=' + new Date().getTime(),
+		  method: 'GET',
+		  dataType: 'json', 
+		  success: function(response) {
+			if( response['success'] )
+			{ 
+				// Hiển thị nội dung trong bảng chấm công
+				var html = '';
+					html += '<table class="orangehrm-timesheet-table" data-v-425cbc6c=""> ' +
+														'<thead class="orangehrm-timesheet-table-header" data-v-425cbc6c="">' +
+															'<tr class="orangehrm-timesheet-table-header-row" data-v-425cbc6c="">';
+															$.each(response['data'],function(key,data){
+																html += '<th class="orangehrm-timesheet-table-header-cell --center" data-v-425cbc6c=""> ' +
+																	'<span class="--day" data-v-425cbc6c="">' + data['date'] + '</span><span data-v-425cbc6c="">' + data['datename'] + '</span>' +
+																'</th>';
+															});	
+													html += '</tr>' +
+														'</thead> '+
+														'<tbody class="orangehrm-timesheet-table-body" data-v-425cbc6c="">' +
+															'<tr class="orangehrm-timesheet-table-body-row" data-v-425cbc6c="">';
+													$.each(response['data'],function(key,data){
+														
+														html += '<td class="orangehrm-timesheet-table-body-cell --center" data-v-425cbc6c="">' +
+																	'<button class="oxd-icon-button oxd-icon-button--secondary orangehrm-timesheet-icon-comment" type="button" data-v-f5c763eb="" data-v-425cbc6c="" style="display: none;">' +
+																		'<i class="oxd-icon bi-chat-dots" data-v-bddebfba="" data-v-f5c763eb=""></i>' +
+																	'</button>';
+																	
+															html += '<span data-v-425cbc6c="">';
+															$.each(data['datetimekeeping'],function(keys,datas){
+																html += '' + datas['time_login'] + ' - ' + datas['time_checkout'];
+															});
+															html += '</span> <br>';
+																	
+														html += '</td>';
+																
+													});			
+													html += '</tr>' +
+
+														'</tbody>' +
+													'</table>';
+				
+				
+				$('.timekeeping-tab-table2').html(html);
+			}
+		  },
+		  error: function() {
+			alert('Có lỗi xảy ra khi gọi AJAX.');
+		  }
+		});
+	  });
+  });
+});
+
+			
+											<!-- END:time_week_loop --> 
+											
+											<!-- BEGIN:time_current_look -->
 window.addEventListener('load', function() {
   document.getElementById('mytimekeeping-submit').click();
 });
 			
-											<!-- END:time_current_look -->                        
+											<!-- END:time_current_look --> 
+
+
+
+											
 </script>                      
           
                                
@@ -859,6 +899,41 @@ window.addEventListener('load', function() {
 
 
 <!-- END: main -->
+
+
+<table class="orangehrm-timesheet-table" data-v-425cbc6c="">
+												<thead class="orangehrm-timesheet-table-header" data-v-425cbc6c="">
+													<tr class="orangehrm-timesheet-table-header-row" data-v-425cbc6c="">
+														<!-- BEGIN: time_week -->
+														<th class="orangehrm-timesheet-table-header-cell --center" data-v-425cbc6c="">
+															<span class="--day" data-v-425cbc6c="">{DATE.date}</span><span data-v-425cbc6c="">{DATE.datename}</span>
+														</th>
+														<!-- END: time_week -->
+																											</tr>
+												</thead>
+												<tbody class="orangehrm-timesheet-table-body" data-v-425cbc6c="">
+													<tr class="orangehrm-timesheet-table-body-row" data-v-425cbc6c="">
+														<!-- BEGIN: time_week_look -->
+														<td class="orangehrm-timesheet-table-body-cell --center" data-v-425cbc6c="">
+															<button class="oxd-icon-button oxd-icon-button--secondary orangehrm-timesheet-icon-comment" type="button" data-v-f5c763eb="" data-v-425cbc6c="" style="display: none;">
+																<i class="oxd-icon bi-chat-dots" data-v-bddebfba="" data-v-f5c763eb=""></i>
+															</button>
+															<!-- BEGIN: loop -->
+															<span data-v-425cbc6c="">{TIMEKEEPING.time_login} - {TIMEKEEPING.time_checkout}</span> <br>
+															<!-- END: loop -->
+														</td>
+														<!-- END: time_week_look -->
+														
+													</tr>
+
+												</tbody>
+											</table>
+							
+
+
+
+
+
 
 
 

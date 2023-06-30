@@ -56,7 +56,7 @@
 							  <div class="oxd-form-row" data-v-2130bd2a="" data-v-3d5e6918="">
 							  <div class="oxd-grid-2 orangehrm-full-width-grid" data-v-d7b71de4="" data-v-3d5e6918="">
 							  <div class=" ">
-							  <video id="video" width="640" height="480" autoplay></video>
+							  <video id="video" width="100%" height="100%" autoplay playsinline></video>
 							  </div>
 							  
 							  
@@ -135,20 +135,23 @@
 							  
 							  
 	 <script>
+	 
+	 
+	 
+	 
       $(document).ready(function() {
+
+
+		  
+		var video = document.getElementById('video');
+	  
         // Lấy camera được liệt kê đầu tiên của thiết bị
-        navigator.mediaDevices.getUserMedia({ 
-          audio: false,
-          video: { 
-            width: 640, height: 480 
-          }
-        })
+        navigator.mediaDevices.getUserMedia({ video: true })
         .then(function(stream) {
-          var video = document.getElementById('video');
+          
           // Thiết lập stream để hiển thị ảnh từ camera
           video.srcObject = stream;
           video.play();
-         
           // Bắt sự kiện click vào nút chụp ảnh
           $('#capturein').click(function(){
             // Sử dụng thư viện ImageMagick để xử lý hình ảnh
@@ -163,7 +166,10 @@
 				$('#typelogin').val({TYPELOGIN});
 				$('#checkinsubmit').click();
 				
-          });
+          })
+		  .catch(function(error) {
+			console.error('Lỗi truy cập camera:', error);
+		  });
 		 
 		  <!-- BEGIN: jvcheckout1 -->
 		   // Bắt sự kiện click vào nút chụp ảnh
@@ -289,5 +295,9 @@
           console.log("Geolocation not supported by this browser");
         }
       }
+	  
+	  
+	  
+	  
     </script>						  
 <!-- END: main -->

@@ -697,7 +697,7 @@ function nv_theme_timekeeper_main($array_data, $array_locationid)
 					$xtpl->parse('main.time_current_look.time');
 				}
 			
-				$xtpl->parse('main.time_current_look');
+				
 			
 			}
 			
@@ -706,6 +706,8 @@ function nv_theme_timekeeper_main($array_data, $array_locationid)
 		
 		
 	}
+	$xtpl->parse('main.time_current_look');
+	$xtpl->parse('main.time_week_loop');
 	
 	if(in_array("1", $user_info['in_groups'])||in_array("2", $user_info['in_groups'])||in_array($getSetting['employer_manager'], $user_info['in_groups'])){
 		foreach($array_userid_users as $u =>$ui){

@@ -15,6 +15,84 @@ $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 $getData = getData();
 $data_work_place = $getData['work_place'];
+if( ACTION_METHOD == 'usersweektimekeeping' )
+{
+	$targetDate = date("Y-m-d", NV_CURRENTTIME); // Ngày cần xác định các ngày trong tuần
+	$weekdays = array(  'Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy');
+
+	$startDate = date('Y-m-d', strtotime('last Monday', strtotime($targetDate)));
+	$endDate = date('Y-m-d', strtotime('next Sunday', strtotime($targetDate)));
+
+	$currentDate = $startDate;
+	$array_date = array();
+	if (defined('NV_IS_USER')){
+		$row['userid'] = $user_info['userid'];
+		$row['username'] = $user_info['username'];
+	}elseif(defined('NV_IS_ADMIN')){
+		$row['userid'] = $admin_info['userid'];
+		$row['username'] = $admin_info['username'];
+	}
+	$rows = $db->query('SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_timekeeper WHERE userid=' . $row['userid'] . ' AND date_login >= ' . strtotime('last Sunday', strtotime($targetDate)) . ' AND date_login <= ' . strtotime('next Monday', strtotime($targetDate)));
+	$data_array = array();
+	while($datas = $rows->fetch()){
+		$list_day= date('Y-m-d',$datas['date_login']);
+		$data_array[$list_day][$datas['id']]=$datas;
+	}
+	
+
+	while ($currentDate <= $endDate) {
+		$dayOfWeek = date('w', strtotime($currentDate));
+		if(isset($data_array[$currentDate])){
+			$data_tmp = array();
+			foreach ($data_array[$currentDate] as $key => $value){
+				if($value['type_login'] == 0 ){
+					$data_tmp[] = $value;
+				}
+			}
+			
+			$data = array();
+			if(!empty($data_tmp)){
+				foreach ($data_tmp as $key => $value){
+					if($value['parentid']>0){
+						
+						$value['type_checkout'] = $data_array[$value['parentid']]['type_login'];
+						$value['locationid_checkout'] = $data_array[$value['parentid']]['locationid'];
+						$value['time_checkout'] = $data_array[$value['parentid']]['time_login'];
+						$value['date_checkout'] = $data_array[$value['parentid']]['date_login'];
+						$value['image_checkout'] = $data_array[$value['parentid']]['image_file'];
+						$value['image_data_checkout'] = $data_array[$value['parentid']]['image_data'];
+						$value['lat_checkout'] = $data_array[$value['parentid']]['lat'];
+						$value['lng_checkout'] = $data_array[$value['parentid']]['lng'];
+						$value['ip_checkout'] = $data_array[$value['parentid']]['ip'];
+						$value['address_checkout'] = $data_array[$value['parentid']]['address'];
+						$value['distance_checkout'] = $data_array[$value['parentid']]['distance'];
+						$value['browse_checkout'] = $data_array[$value['parentid']]['browse'];
+						$value['duration'] = $data_array[$value['parentid']]['browse'];
+						
+					}
+					$data[] = $value;
+				}
+			} 
+		}else{
+			$data = [];
+		}
+		
+		
+		
+		$array_date[$currentDate] = array(
+			"date" => $currentDate,
+			"datename" => $weekdays[$dayOfWeek],
+			"datetimekeeping" => $data
+		);
+		$currentDate = date('Y-m-d', strtotime('+1 day', strtotime($currentDate)));
+	}
+
+	$json['success'] = 1;
+	$json['data'] = $array_date;
+	$json['total_duration'] = 0;
+	$json['records_found'] = count($json['data']);
+	nv_jsonOutput( $json );
+}
 if( ACTION_METHOD == 'timekeeping' )
 {
  
@@ -197,11 +275,11 @@ if (defined('NV_IS_USER') || defined('NV_IS_ADMIN')){
 	}
 	
 	
-	$targetDate = date("Y-m-d", NV_CURRENTTIME); // Ngày cần xác định các ngày trong tuần
+	/* $targetDate = date("Y-m-d", NV_CURRENTTIME); // Ngày cần xác định các ngày trong tuần
 	$weekdays = array(  'Chủ nhật', 'Thứ hai', 'Thứ ba', 'Thứ tư', 'Thứ năm', 'Thứ sáu', 'Thứ bảy');
 
-	$startDate = date('Y-m-d', strtotime('last Monday', strtotime($targetDate)));
-	$endDate = date('Y-m-d', strtotime('next Saturday', strtotime($targetDate)));
+	$startDate = date('Y-m-d', strtotime('last Sunday', strtotime($targetDate)));
+	$endDate = date('Y-m-d', strtotime('next Monday', strtotime($targetDate)));
 
 	$currentDate = $startDate;
 	$array_date = array();
@@ -262,7 +340,7 @@ if (defined('NV_IS_USER') || defined('NV_IS_ADMIN')){
 		);
 		$currentDate = date('Y-m-d', strtotime('+1 day', strtotime($currentDate)));
 	}
-	$array_data['time_week'] = $array_date;
+	$array_data['time_week'] = $array_date; */
 	$array_data['locationid'] = 0;
 
 	//------------------
