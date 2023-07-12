@@ -1,7 +1,3 @@
-(function(d){d.fn.price_format=function(){function l(k,b,a){var c='',g=a.replace(/[^0-9.]/g, '').split('');a=[];for(var e=0,h="",f=g.length-1;0<=f;f--)h+=g[f],e++,3==e&&(a.push(h),e=0,h="");0<e&&a.push(h);for(f=a.length-1;0<=f;f--){g=a[f].split("");for(e=g.length-1;0<=e;e--)c+=g[e];0<f&&(c+=",")}"input"==b?d(k).val(c):d(k).empty().text(c)}this.each(function(k,b){var a=null,c=null;d(b).is("input")||d(b).is("textarea")?(c=d(b).val().replace(/,/g,""),a="input"):(c=d(b).text().replace(/,/g,""),a="other");d(b).on("paste keyup",function(){if( d(b).val().length > 1 && $.isNumeric(d(b).val())){c=d(b).val().replace(/,/g,"").replace(/^0+/, '');}else{c=d(b).val().replace(/,/g,"");if( c== '' ) c = 0;}l(b,a,c)});l(b,a,c)})}})(jQuery);
- 
-
-
 function keypress(e) {
 
     var keypressed = null;
@@ -26,16 +22,6 @@ function clearconsole() { console.log(window.console);if(window.console || windo
 function getData(b){var c={},d=/^data\-(.+)$/;$.each(b.get(0).attributes,function(b,a){if(d.test(a.nodeName)){var e=a.nodeName.match(d)[1];c[e]=a.nodeValue}});return c};
 function getRandomNum(lbound, ubound) {
 	return (Math.floor(Math.random() * (ubound - lbound)) + lbound);
-}
-
-
-function radomClass(length=6) {
-    var randomChars = 'abcdefghijklmnopqrstuvwxyz';
-    var result = '';
-    for ( var i = 0; i < length; i++ ) {
-        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
-    }
-    return result;
 }
 
 function getRandomChar() {
@@ -245,7 +231,25 @@ $( 'body' ).on('click', '[data-ajax="true"]', function() {
 	}
 });
 
- 
+$( 'body' ).on('click', '[aria-controls="tour-photo"]', function() {
+	$('#carousel').flexslider({
+		animation: "slide",
+		controlNav: false,
+		animationLoop: false,
+		slideshow: false,
+		itemWidth: 200,
+		itemMargin: 5,
+		asNavFor: '#slider'
+	});
+	 
+	$('#slider').flexslider({
+		animation: "slide",
+		controlNav: false,
+		animationLoop: false,
+		slideshow: false,
+		sync: "#carousel"
+	});
+});
  
 $(document).ready(function() {
 	
